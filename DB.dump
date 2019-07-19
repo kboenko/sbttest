@@ -1,0 +1,72 @@
+CREATE TABLE public.purchases (
+	id serial NOT NULL,
+	product_id int4 NOT NULL,
+	purchasedate date NULL,
+	period_id int4 NULL,
+	periodqty int4 NULL,
+	unit_id int4 NULL,
+	unitqty int4 NULL,
+	CONSTRAINT purchases_pk PRIMARY KEY (id),
+	CONSTRAINT purchases_periods_fk FOREIGN KEY (period_id) REFERENCES periods(id),
+	CONSTRAINT purchases_products_fk FOREIGN KEY (product_id) REFERENCES products(id),
+	CONSTRAINT purchases_units_fk FOREIGN KEY (unit_id) REFERENCES units(id)
+)
+WITH (
+	OIDS=FALSE
+) ;
+
+
+CREATE TABLE public.products (
+	id serial NOT NULL,
+	"name" varchar(100) NOT NULL,
+	price int4 NOT NULL,
+	CONSTRAINT products_pk PRIMARY KEY (id)
+)
+WITH (
+	OIDS=FALSE
+) ;
+
+
+CREATE TABLE public.periods (
+	id serial NOT NULL,
+	"name" varchar(10) NOT NULL,
+	CONSTRAINT periods_pk PRIMARY KEY (id)
+)
+WITH (
+	OIDS=FALSE
+) ;
+
+
+CREATE TABLE public.units (
+	id serial NOT NULL,
+	"name" varchar(5) NOT NULL,
+	CONSTRAINT units_pk PRIMARY KEY (id)
+)
+WITH (
+	OIDS=FALSE
+) ;
+
+
+insert into units (name) values ('itm');
+insert into units (name) values ('kg');
+insert into units (name) values ('l');
+insert into units (name) values ('g');
+
+insert into purchases (productid, purchasedate, periodid, periodqty, unitid, unitqty)
+values (1, '2019-07-18', 1, 2, 1, 1);
+insert into purchases (productid, purchasedate, periodid, periodqty, unitid, unitqty)
+values (2, '2019-07-22', null, null, 3, 1);
+insert into purchases (productid, purchasedate, periodid, periodqty, unitid, unitqty)
+values (5, '2019-07-24', 2, 1, 2, 3);
+
+insert into periods (name) values ('day');
+insert into periods (name) values ('week');
+insert into periods (name) values ('month');
+insert into periods (name) values ('year');
+
+insert into products (name, price) values ('bread', 30);
+insert into products (name, price) values ('milk', 25);
+insert into products (name, price) values ('butter', 50);
+insert into products (name, price) values ('oranges', 130);
+insert into products (name, price) values ('apples', 100);
+insert into products (name, price) values ('cheese', 280);
